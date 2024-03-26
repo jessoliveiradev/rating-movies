@@ -35,7 +35,7 @@ Install the project's dependencies using npm:
 
 2. Create a MySQL database for the project. You can do this manually using MySQL Workbench or any other database administration tool.
 
-3. Configure the database connection information in the `config/config.json` file. Replace `your_user`, `your_password` and `database_name` with the correct information from your database.
+3. Configure the database connection information in the `config/config.json` file. Replace `username`, `password` and `database` with the correct information from your database.
 
 ## Creating the Database
 
