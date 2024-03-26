@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { Sequelize } = require('sequelize');
-const userModel = require('./models/User');
+const userRoutes = require('./routes/user');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,8 +15,6 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
   dialect: config.dialect
 });
 
-const User = userModel(sequelize, Sequelize);
-
 sequelize.authenticate()
   .then(() => {
     console.log('Conexão bem-sucedida com o banco de dados.');
@@ -25,16 +23,8 @@ sequelize.authenticate()
     console.error('Erro ao conectar ao banco de dados:', err);
   });
 
-app.post('/users', async (req, res) => {
-  try {
-    const { username, role } = req.body;
-    const newUser = await User.create({ username, role });
-    res.status(201).json(newUser);
-  } catch (error) {
-    console.error('Erro ao criar usuário:', error);
-    res.status(500).json({ error: 'Erro ao criar usuário' });
-  }
-});
+app.use('/users', userRoutes);
+
 
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
