@@ -47,6 +47,12 @@ Before running the server, you need to create the necessary tables in the databa
 
 This command will create the necessary tables in the database based on the models defined in the project.
 
+```bash
+  npm run seed
+```
+
+This command will run the seeder and create the users in the database.
+
 ## Running the Server
 
 With all the configurations and migrations done, you're ready to launch the server. Run the following command:
