@@ -6,8 +6,8 @@ This is a simple project for rating films, built with Node.js, Express and MySQL
 
 Before running this project locally, make sure you have the following installed on your machine:
 
-- [Node.js]
-- [MySQL]
+- [Node.js](https://nodejs.org/en)
+- [MySQL](https://www.mysql.com/)
 
 ## Installation
 
