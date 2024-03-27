@@ -4,7 +4,6 @@ const { DataTypes, Model } = require('sequelize');
 module.exports = (sequelize) => {
   class User extends Model {
     static associate(models) {
-      // Defina as associações de modelo aqui, se necessário
     }
   }
   User.init(
@@ -21,11 +20,16 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      deletedAt: {
+        type: DataTypes.DATE,
+        allowNull: true
+      }
     },
     {
       sequelize,
       modelName: 'User',
-    }
+      paranoid: true
+    },
   );
 
   User.beforeCreate(async (user, options) => {
