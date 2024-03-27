@@ -1,5 +1,7 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const { User } = require('../models');
+const config = require('../config/config.json');
 
 exports.createUser = async (req, res) => {
   try {
@@ -9,8 +11,7 @@ exports.createUser = async (req, res) => {
     }
 
     const authToken = token.split(' ')[1];
-
-    const decodedToken = jwt.verify(authToken, 'your_secret_key_here');
+    const decodedToken = jwt.verify(authToken, config['development'].jwt_secret_key);
     
     if (decodedToken.role !== 'ADMIN') {
       return res.status(403).json({ error: 'Permissão negada. Apenas usuários com a função ADMIN podem cadastrar novos usuários.' });
@@ -28,6 +29,18 @@ exports.createUser = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   try {
+    const token = req.headers.authorization;
+    if (!token) {
+      return res.status(401).json({ error: 'Token JWT ausente. Você precisa estar autenticado para acessar esta rota.' });
+    }
+
+    const authToken = token.split(' ')[1];
+    const decodedToken = jwt.verify(authToken, config['development'].jwt_secret_key);
+    
+    if (decodedToken.role !== 'ADMIN') {
+      return res.status(403).json({ error: 'Permissão negada. Apenas usuários com a função ADMIN podem alterar um usuário.' });
+    }
+
     const { id } = req.params;
     const { username, role, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
