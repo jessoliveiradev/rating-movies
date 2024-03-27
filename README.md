@@ -61,4 +61,38 @@ With all the configurations and migrations done, you're ready to launch the serv
   npm start
 ```
 
+## Configuração da Chave Secreta JWT
+
+Before running the project, you need to add a JWT secret key to the `config.json` configuration file. This secret key is used to sign and verify JWT tokens used in user authentication.
+
+Make sure you add the secret key to the `config.json` file in the following structure:
+
+```json
+{
+  "development": {
+    "username": "root",
+    "password": "root",
+    "database": "database_development",
+    "host": "localhost",
+    "dialect": "mysql",
+    "jwt_secret_key": "your_secret_key_here"
+  },
+  "test": {
+    "username": "root",
+    "password": "root",
+    "database": "database_test",
+    "host": "localhost",
+    "dialect": "mysql",
+    "jwt_secret_key": "your_secret_key_here"
+  },
+  "production": {
+    "username": "root",
+    "password": "root",
+    "database": "database_production",
+    "host": "localhost",
+    "dialect": "mysql",
+    "jwt_secret_key": "your_secret_key_here"
+  }
+}
+
 The server will be running on http://localhost:3000 by default.

@@ -1,9 +1,24 @@
+const bcrypt = require('bcrypt');
 const { User } = require('../models');
 
 exports.createUser = async (req, res) => {
   try {
-    const { username, role } = req.body;
-    const newUser = await User.create({ username, role });
+    const token = req.headers.authorization;
+    if (!token) {
+      return res.status(401).json({ error: 'Token JWT ausente. Você precisa estar autenticado para acessar esta rota.' });
+    }
+
+    const authToken = token.split(' ')[1];
+
+    const decodedToken = jwt.verify(authToken, 'your_secret_key_here');
+    
+    if (decodedToken.role !== 'ADMIN') {
+      return res.status(403).json({ error: 'Permissão negada. Apenas usuários com a função ADMIN podem cadastrar novos usuários.' });
+    }
+
+    const { username, role, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = await User.create({ username, role, password: hashedPassword });
     res.status(201).json(newUser);
   } catch (error) {
     console.error('Erro ao criar usuário:', error);
@@ -14,8 +29,9 @@ exports.createUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { username, role } = req.body;
-    const updatedUser = await User.update({ username, role }, { where: { id } });
+    const { username, role, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const updatedUser = await User.update({ username, role, password: hashedPassword }, { where: { id } });
     if (updatedUser[0] === 1) {
       res.status(200).json({ message: 'Usuário atualizado com sucesso' });
     } else {
