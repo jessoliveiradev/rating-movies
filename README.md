@@ -94,5 +94,6 @@ Make sure you add the secret key to the `config.json` file in the following stru
     "jwt_secret_key": "your_secret_key_here"
   }
 }
+```
 
 The server will be running on http://localhost:3000 by default.
