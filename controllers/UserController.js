@@ -36,19 +36,38 @@ exports.updateUser = async (req, res) => {
 
     const authToken = token.split(' ')[1];
     const decodedToken = jwt.verify(authToken, config['development'].jwt_secret_key);
-    
-    if (decodedToken.role !== 'ADMIN') {
-      return res.status(403).json({ error: 'Permissão negada. Apenas usuários com a função ADMIN podem alterar um usuário.' });
-    }
 
     const { id } = req.params;
     const { username, role, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const updatedUser = await User.update({ username, role, password: hashedPassword }, { where: { id } });
-    if (updatedUser[0] === 1) {
-      res.status(200).json({ message: 'Usuário atualizado com sucesso' });
-    } else {
-      res.status(404).json({ error: 'Usuário não encontrado' });
+    console.log({ id, idLogado: parseInt(decodedToken.userId) });
+
+    if (decodedToken.role === 'USER' && decodedToken.userId !== parseInt(id)) {
+      return res.status(403).json({ error: 'Permissão negada. Você não tem permissão para alterar este usuário.' });
+    }
+
+    if (decodedToken.role === 'ADMIN') {
+      const updatedUser = await User.update({ username, role }, { where: { id } });
+      if (updatedUser[0] === 1) {
+        return res.status(200).json({ message: 'Usuário atualizado com sucesso' });
+      } else {
+        return res.status(404).json({ error: 'Usuário não encontrado' });
+      }
+    }
+
+    if (decodedToken.role === 'USER') {
+      if (role) {
+        return res.status(403).json({ error: 'Permissão negada. Você não tem permissão para alterar a role.' });
+      }
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const updatedUser = await User.update({ username, password: hashedPassword }, { where: { id } });
+
+      if (updatedUser[0] === 1) {
+        console.log(updatedUser[0]);
+        return res.status(200).json({ message: 'Usuário atualizado com sucesso' });
+      } else {
+        return res.status(404).json({ error: 'Usuário não encontrado' });
+      }
     }
   } catch (error) {
     console.error('Erro ao atualizar usuário:', error);
