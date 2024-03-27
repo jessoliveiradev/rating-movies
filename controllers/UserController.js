@@ -39,7 +39,6 @@ exports.updateUser = async (req, res) => {
 
     const { id } = req.params;
     const { username, role, password } = req.body;
-    console.log({ id, idLogado: parseInt(decodedToken.userId) });
 
     if (decodedToken.role === 'USER' && decodedToken.userId !== parseInt(id)) {
       return res.status(403).json({ error: 'Permissão negada. Você não tem permissão para alterar este usuário.' });

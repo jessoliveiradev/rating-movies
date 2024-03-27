@@ -5,7 +5,6 @@ const config = require('../config/config.json');
 
 
 exports.login = async (req, res) => {
-  console.log('oi');
   const { username, password } = req.body;
 
   try {
