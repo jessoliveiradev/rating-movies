@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const { Sequelize } = require('sequelize');
 const userRoutes = require('./routes/user');
 const authRoutes = require('./routes/auth');
+const movieRoutes = require('./routes/movie');
 const logoutRouter = require('./routes/logout');
 
 const app = express();
@@ -10,8 +11,9 @@ const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(authRoutes);
+app.use(logoutRouter);
 app.use('/users', userRoutes);
-app.use('/logout', logoutRouter);
+app.use('/movies', movieRoutes);
 
 const config = require('./config/config.json')['development'];
 

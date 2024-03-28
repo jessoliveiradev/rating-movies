@@ -3,12 +3,13 @@ const router = express.Router();
 const { authenticateJWT } = require('../middlewares/authMiddleware');
 const UserController = require('../controllers/UserController');
 
-router.get('/', authenticateJWT, UserController.getAllUsers);
+router.route('/')
+  .get(authenticateJWT, UserController.getAllUsers)
+  .post(authenticateJWT, UserController.createUser);
 
-router.post('/', authenticateJWT, UserController.createUser);
-
-router.put('/:id', authenticateJWT, UserController.updateUser);
-
-router.delete('/:id', authenticateJWT, UserController.deleteUser);
+router.route('/:id')
+  .get(authenticateJWT, UserController.getUser)
+  .put(authenticateJWT, UserController.updateUser)
+  .delete(authenticateJWT, UserController.deleteUser);
 
 module.exports = router;
