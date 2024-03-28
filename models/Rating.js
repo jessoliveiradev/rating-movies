@@ -31,6 +31,10 @@ module.exports = (sequelize) => {
       movieId: {
         type: DataTypes.INTEGER,
         allowNull: false
+      },
+      deletedAt: {
+        type: DataTypes.DATE,
+        allowNull: true
       }
     },
     {
