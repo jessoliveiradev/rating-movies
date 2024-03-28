@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+const config = require('../config/config.json');
 const { Movie } = require('../models');
 
 exports.createMovie = async (req, res) => {
