@@ -4,6 +4,7 @@ const { Sequelize } = require('sequelize');
 const userRoutes = require('./routes/user');
 const authRoutes = require('./routes/auth');
 const movieRoutes = require('./routes/movie');
+const ratingRoutes = require('./routes/rating');
 const logoutRouter = require('./routes/logout');
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(authRoutes);
 app.use(logoutRouter);
 app.use('/users', userRoutes);
 app.use('/movies', movieRoutes);
+app.use('/ratings', ratingRoutes);
 
 const config = require('./config/config.json')['development'];
 
