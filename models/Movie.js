@@ -4,6 +4,7 @@ const { DataTypes, Model } = require('sequelize');
 module.exports = (sequelize) => {
   class Movie extends Model {
     static associate(models) {
+      Movie.hasMany(models.Rating, { foreignKey: 'movieId' });
     }
   }
   Movie.init(

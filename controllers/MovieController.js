@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/config.json');
-const { Movie } = require('../models');
+const { Movie, Rating, Sequelize } = require('../models');
 
 exports.createMovie = async (req, res) => {
   try {
@@ -43,7 +43,13 @@ exports.deleteMovie = async (req, res) => {
 
 exports.getAllMovies = async (req, res) => {
   try {
-    const movies = await Movie.findAll();
+    const movies = await Movie.findAll({
+      include: [{
+        model: Rating,
+        where: { movieId: Sequelize.col('Movie.id') },
+        required: false
+      }]
+    });
     res.status(200).json(movies);
   } catch (error) {
     console.error('Erro ao listar filmes:', error);
