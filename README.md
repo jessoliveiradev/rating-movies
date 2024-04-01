@@ -53,14 +53,6 @@ This command will create the necessary tables in the database based on the model
 
 This command will run the seeder and create the users in the database.
 
-## Running the Server
-
-With all the configurations and migrations done, you're ready to launch the server. Run the following command:
-
-```bash
-  npm start
-```
-
 ## Configuração da Chave Secreta JWT
 
 Before running the project, you need to add a JWT secret key to the `config.json` configuration file. This secret key is used to sign and verify JWT tokens used in user authentication.
@@ -96,4 +88,29 @@ Make sure you add the secret key to the `config.json` file in the following stru
 }
 ```
 
+## Running the Server
+
+With all the configurations and migrations done, you're ready to launch the server. Run the following command:
+
+```bash
+  cd api
+```
+
+```bash
+  npm start
+```
 The server will be running on http://localhost:3000 by default.
+
+## Running the Frontend
+
+Open another terminal. Run the following command:
+
+```bash
+  cd frontend
+```
+
+```bash
+  npm start
+```
+
+Possibly the frontend will run on port [http://localhost:3001](http://localhost:3001)
