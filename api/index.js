@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { Sequelize } = require('sequelize');
+const cors = require('cors');
 const userRoutes = require('./routes/user');
 const authRoutes = require('./routes/auth');
 const movieRoutes = require('./routes/movie');
@@ -8,6 +9,7 @@ const ratingRoutes = require('./routes/rating');
 const logoutRouter = require('./routes/logout');
 
 const app = express();
+app.use(cors());
 const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
