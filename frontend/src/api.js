@@ -50,3 +50,37 @@ export const createMovie = async (movieData) => {
     throw error;
   }
 };
+
+export const fetchMovieById = async (id) => {
+  try {
+    const token = localStorage.getItem('token');
+
+    const config = {
+      headers: {
+        authorization: `Bearer ${token}`
+      }
+    };
+    
+    const response = await axios.get(`http://localhost:3000/movies/${id}`, config);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const logoutUser = async () => {
+  try {
+    const token = localStorage.getItem('token');
+
+    const config = {
+      headers: {
+        authorization: `Bearer ${token}`
+      }
+    };
+
+    await axios.post('http://localhost:3000/logout', config);
+    localStorage.removeItem('token');
+  } catch (error) {
+    throw error;
+  }
+};

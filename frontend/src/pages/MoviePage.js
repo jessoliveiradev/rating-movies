@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import List from '@mui/material/List';
+import { Link } from 'react-router-dom';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
@@ -81,16 +82,33 @@ const MoviePage = () => {
     }
   };
 
+  const calculateAverageRating = (ratings) => {
+    if (ratings.length === 0) return 0;
+
+    const sum = ratings.reduce((acc, curr) => acc + curr.classify, 0);
+    return sum / ratings.length;
+  };
+
+  const renderMovieColumns = (movie) => (
+    <>
+      <ListItemText sx={{ width: '20%' }} primary={movie.name} />
+      <ListItemText sx={{ width: '25%' }} primary={movie.description} />
+      <ListItemText sx={{ width: '20%' }} primary={movie.director} />
+      <ListItemText sx={{ width: '20%' }} primary={movie.genre} />
+      <ListItemText sx={{ width: '15%' }} primary={`Classificação: ${calculateAverageRating(movie.Ratings)}`} />
+    </>
+  );
+
   return (
     <div>
       <AppBarTitle/>
       <List>
         {movies.map(movie => (
-          <ListItem
-            key={movie.id}
-          >
-            <ListItemText primary={movie.name}/>
-          </ListItem>
+          <Link key={movie.id} to={`/movies/${movie.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <ListItem key={movie.id} sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+              {renderMovieColumns(movie)}
+            </ListItem>
+          </Link>
         ))}
       </List>
       <Modal

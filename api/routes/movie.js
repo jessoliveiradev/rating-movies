@@ -8,6 +8,7 @@ router.route('/')
   .post(authenticateJWT, MovieController.createMovie);
 
 router.route('/:id')
+  .get(authenticateJWT, MovieController.getMovie)
   .delete(authenticateJWT, MovieController.deleteMovie);
 
 module.exports = router;

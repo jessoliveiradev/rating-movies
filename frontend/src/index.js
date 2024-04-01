@@ -7,7 +7,9 @@ import {
 import './index.css';
 import AuthChecker from './components/AuthChecker';
 import LoginPage from './pages/LoginPage';
+import LogoutPage from './pages/LogoutPage';
 import MoviePage from './pages/MoviePage';
+import MovieDetailsPage from './pages/MovieDetailsPage';
 import reportWebVitals from './reportWebVitals';
 
 const router = createBrowserRouter([
@@ -22,6 +24,14 @@ const router = createBrowserRouter([
   {
     path: "/movies",
     element: <MoviePage/>,
+  },
+  {
+    path: "/movies/:id",
+    element: <MovieDetailsPage/>,
+  },
+  {
+    path: "/logout",
+    element: <LogoutPage/>,
   },
 ]);
 

@@ -56,3 +56,25 @@ exports.getAllMovies = async (req, res) => {
     res.status(500).json({ error: 'Erro ao listar filmes' });
   }
 };
+
+exports.getMovie = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const movie = await Movie.findByPk(id, {
+      include: [{
+        model: Rating,
+        where: { movieId: Sequelize.col('Movie.id') },
+        required: false
+      }]
+    });
+
+    if (!movie) {
+      return res.status(404).json({ error: 'Filme não encontrado' });
+    }
+
+    res.status(200).json(movie);
+  } catch (error) {
+    console.error('Erro ao obter filme:', error);
+    res.status(500).json({ error: 'Erro ao obter filme' });
+  }
+};
