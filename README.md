@@ -114,3 +114,7 @@ Open another terminal. Run the following command:
 ```
 
 Possibly the frontend will run on port [http://localhost:3001](http://localhost:3001)
+
+## Documentation
+
+Visit the URL to read the Swagger documentation: [http://localhost:3000/docs](http://localhost:3000/docs)

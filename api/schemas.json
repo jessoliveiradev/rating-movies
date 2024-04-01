@@ -1,0 +1,56 @@
+{
+    "User": {
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "integer"
+            },
+            "username": {
+                "type": "string"
+            },
+            "password": {
+                "type": "string"
+            },
+            "role": {
+                "type": "string"
+            }
+        }
+    },
+    "Movie": {
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "integer"
+            },
+            "name": {
+                "type": "string"
+            },
+            "description": {
+                "type": "string"
+            },
+            "director": {
+                "type": "string"
+            },
+            "genre": {
+                "type": "string"
+            }
+        }
+    },
+    "Rating": {
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "integer"
+            },
+            "classify": {
+                "type": "integer"
+            },
+            "userId": {
+                "type": "integer"
+            },
+            "movieId": {
+                "type": "integer"
+            }
+        }
+    }
+}
